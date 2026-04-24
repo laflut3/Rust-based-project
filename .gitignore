@@ -27,3 +27,11 @@ target
 
 # Ignore environment variable files, which may contain sensitive information
 .env
+
+# AI tools artifacts
+.codex
+.aider*
+.cursor/
+.windsurf/
+.continue/
+.claude/
