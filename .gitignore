@@ -35,3 +35,9 @@ target
 .windsurf/
 .continue/
 .claude/
+
+# Frontend artifacts
+node_modules/
+dist/
+apps/frontend/node_modules/
+apps/frontend/dist/

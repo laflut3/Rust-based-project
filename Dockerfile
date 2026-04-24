@@ -3,23 +3,25 @@ WORKDIR /app
 
 FROM chef AS planner
 COPY Cargo.toml Cargo.lock ./
-COPY src/ ./src
+COPY apps/backend/Cargo.toml ./apps/backend/Cargo.toml
+COPY apps/backend/src/ ./apps/backend/src
 RUN cargo chef prepare --recipe-path recipe.json
 
 FROM chef AS builder
 COPY --from=planner /app/recipe.json recipe.json
 RUN cargo chef cook --release --recipe-path recipe.json
-COPY Cargo.toml Cargo.lock src/ ./
-RUN cargo build --release
+COPY Cargo.toml Cargo.lock ./
+COPY apps/backend/ ./apps/backend
+RUN cargo build --release --package leto
 
 FROM docker.io/library/debian:trixie-slim@sha256:cedb1ef40439206b673ee8b33a46a03a0c9fa90bf3732f54704f99cb061d2c5a AS runtime
 
-LABEL org.opencontainers.image.title="rust based project template"
-LABEL org.opencontainers.image.description="A simple rust based project template."
+LABEL org.opencontainers.image.title="leto backend"
+LABEL org.opencontainers.image.description="Rust backend for leto."
 LABEL org.opencontainers.image.base.name="docker.io/library/debian:trixie-slim"
 
 WORKDIR /app
 
-COPY --from=builder /app/target/release/rust-based-project /usr/local/bin
+COPY --from=builder /app/target/release/leto /usr/local/bin
 
-ENTRYPOINT ["/usr/local/bin/rust-based-project"]
+ENTRYPOINT ["/usr/local/bin/leto"]

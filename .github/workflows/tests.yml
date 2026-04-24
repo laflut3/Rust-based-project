@@ -1,4 +1,4 @@
-name: Rust Unit Tests
+name: Backend Rust Tests
 
 on:
   pull_request:
@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   tests:
+    name: Run backend tests
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
@@ -21,4 +22,4 @@ jobs:
           toolchain: 1.94
 
       - name: Test
-        run: cargo test
+        run: cargo test --package leto

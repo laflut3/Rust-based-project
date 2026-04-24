@@ -2,7 +2,7 @@ use std::process::Command;
 
 #[test]
 fn main_prints_hello_world() {
-  let output = Command::new(env!("CARGO_BIN_EXE_rust-based-project"))
+  let output = Command::new(env!("CARGO_BIN_EXE_leto"))
     .output()
     .expect("failed to run binary");
 
