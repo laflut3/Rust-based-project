@@ -38,6 +38,6 @@ jobs:
         with:
           push: true
           platforms: linux/amd64, linux/arm64
-          tags: ${{ env.CONTAINER_REGISTRY }}/laflut3/Rust-based-project:${{ github.sha }}
+          tags: ${{ env.CONTAINER_REGISTRY }}/laflut3/rust-based-project:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
