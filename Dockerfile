@@ -14,12 +14,12 @@ RUN cargo build --release
 
 FROM docker.io/library/debian:trixie-slim AS runtime
 
-LABEL org.opencontainers.image.title="CitiesAPI"
-LABEL org.opencontainers.image.description="Simple cities API written in Rust."
+LABEL org.opencontainers.image.title="rust based project template"
+LABEL org.opencontainers.image.description="A simple rust based project template."
 LABEL org.opencontainers.image.base.name="docker.io/library/debian:trixie-slim"
 
 WORKDIR /app
 
-COPY --from=builder /app/target/release/citiesapi /usr/local/bin
+COPY --from=builder /app/target/release/rust-based-project /usr/local/bin
 
-ENTRYPOINT ["/usr/local/bin/citiesapi"]
+ENTRYPOINT ["/usr/local/bin/rust-based-project"]
