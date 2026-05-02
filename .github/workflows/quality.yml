@@ -4,6 +4,22 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - src/**
+      - tests/**
+      - .github/workflows/**
+      - Dockerfile
+      - trivy.yml
+      - .pre-commit-config.yaml
+      - Cargo.toml
+      - compose.yml
+      - renovate.json
+      - rustfmt.toml
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -19,7 +35,7 @@ jobs:
       - name: Install Rust toolchain
         uses: actions-rust-lang/setup-rust-toolchain@2b1f5e9b395427c92ee4e3331786ca3c37afe2d7 # v1
         with:
-          toolchain: 1.94
+          toolchain: 1.95
           components: clippy, rustfmt
 
       - name: Setup Python
