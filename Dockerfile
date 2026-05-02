@@ -17,15 +17,15 @@ COPY --from=planner /app/recipe.json ./
 RUN cargo chef cook --release --target "$(cat /rust-target)" --recipe-path recipe.json
 COPY . .
 RUN cargo build --release --target "$(cat /rust-target)"
-RUN cp "/app/target/$(cat /rust-target)/release/citiesapi" /app/citiesapi
+RUN cp "/app/target/$(cat /rust-target)/release/rust-based-project" /app/rust-based-project
 
 FROM gcr.io/distroless/static-debian13@sha256:47b2d72ff90843eb8a768b5c2f89b40741843b639d065b9b937b07cd59b479c6 AS runtime
 
-LABEL org.opencontainers.image.title="CitiesAPI"
+LABEL org.opencontainers.image.title="Rust-based-project"
 LABEL org.opencontainers.image.description="Simple cities API written in Rust."
 LABEL org.opencontainers.image.base.name="gcr.io/distroless/static-debian13"
 
 USER nonroot:nonroot
-COPY --from=builder /app/citiesapi /usr/local/bin/citiesapi
+COPY --from=builder /app/rust-based-project /usr/local/bin/rust-based-project
 EXPOSE 2022
-ENTRYPOINT [ "/usr/local/bin/citiesapi" ]
+ENTRYPOINT [ "/usr/local/bin/rust-based-project" ]

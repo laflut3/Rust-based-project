@@ -37,7 +37,7 @@ jobs:
       - name: Check source image exists
         run: |
           docker buildx imagetools inspect \
-            ${{ env.CONTAINER_REGISTRY }}/richarddorian/citiesapi:${{ github.sha }}
+            ${{ env.CONTAINER_REGISTRY }}/laflut3/Rust-based-project:${{ github.sha }}
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4
@@ -50,8 +50,8 @@ jobs:
         run: |
           DOCKER_TAG="${RELEASE_TAG#v}"
           docker buildx imagetools create \
-            -t ${{ env.CONTAINER_REGISTRY }}/richarddorian/citiesapi:${DOCKER_TAG} \
-            ${{ env.CONTAINER_REGISTRY }}/richarddorian/citiesapi:${{ github.sha }}
+            -t ${{ env.CONTAINER_REGISTRY }}/laflut3/Rust-based-project:${DOCKER_TAG} \
+            ${{ env.CONTAINER_REGISTRY }}/laflut3/Rust-based-project:${{ github.sha }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@b4309332981a82ec1c5618f44dd2e27cc8bfbfda # v3
