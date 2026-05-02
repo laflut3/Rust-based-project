@@ -1,44 +1,68 @@
-# Rust-based-project
-rust based project
+# Rust Template Project
 
-## Template changes
+Base template for a Rust service with CI, container build, release workflow, and security scanning.
 
-When creating a new repository from this template, complete this checklist before the first merge:
+## Template Checklist
 
-- [ ] Rename the project in `Cargo.toml` (`[package].name`) and adjust `version` if needed.
-- [ ] Update the binary name in `Dockerfile`:
-  - [ ] `COPY --from=builder /app/target/release/<binary-name> /usr/local/bin`
+When you create a new repository from this template, update the items below before the first merge.
+
+### 1) Project identity
+
+- [ ] Update `README.md` title/description.
+- [ ] Update `Cargo.toml`:
+  - [ ] `[package].name`
+  - [ ] `version`
+  - [ ] `description`
+  - [ ] `repository`, `homepage`, `documentation` (if used)
+  - [ ] `license`
+- [ ] Update `Cargo.lock` by running `cargo check` after metadata changes.
+- [ ] Rename crate references in tests if the binary name changed (`env!("CARGO_BIN_EXE_<name>")`).
+
+### 2) Application code
+
+- [ ] Replace template output/logic in `src/main.rs`.
+- [ ] Update or replace template tests in `tests/`.
+- [ ] Ensure app port and runtime behavior match your service contract.
+
+### 3) Container image
+
+- [ ] Update binary name in `Dockerfile`:
+  - [ ] `cp .../release/<binary-name> /app/<binary-name>`
+  - [ ] `COPY --from=builder /app/<binary-name> /usr/local/bin/<binary-name>`
   - [ ] `ENTRYPOINT ["/usr/local/bin/<binary-name>"]`
-- [ ] Update OCI labels in `Dockerfile` (`title`, `description`) to match the new project.
-- [ ] Update image names in `.github/workflows/build.yml` and `.github/workflows/release.yml` (replace `laflut3/rust-based-project` with `<owner>/<repo>`).
-- [ ] Update the `README.md` title and description.
-- [ ] Update `SECURITY.md` with the real vulnerability disclosure process (contact details, response times).
-- [ ] Review CI tool versions in `.github/workflows/*.yml` (Rust, Python, action versions).
-- [ ] Configure required CI secrets/settings if you publish container images (registry/package permissions).
-- [ ] Review `LICENSE` and attribution if the new project requires a different setup.
-- [ ] Create and document a `.env` file (or `.env.example`) if the application depends on environment variables.
-- [ ] Run quality checks and tests locally before the first push:
-  - [ ] `pre-commit run --all-files`
-  - [ ] `cargo test`
+- [ ] Update OCI labels in `Dockerfile`:
+  - [ ] `org.opencontainers.image.title`
+  - [ ] `org.opencontainers.image.description`
+  - [ ] any additional labels you require
+- [ ] Keep image names lowercase (Docker/OCI requirement).
 
-## Development
+### 4) GitHub Actions and release
 
-### Development compose
+- [ ] Update container repository slug in workflows:
+  - [ ] `.github/workflows/build.yml`
+  - [ ] `.github/workflows/release.yml`
+  - Use `ghcr.io/<owner>/<repo>` in lowercase.
+- [ ] Review workflow triggers (`push`, `pull_request`, tags) for your branching strategy.
+- [ ] Review pinned action versions and toolchain versions (Rust, Python, Docker actions).
+- [ ] If release tags differ from `v*`, update `.github/workflows/release.yml`.
+- [ ] Verify required GitHub permissions for workflows (`contents`, `packages`, `security-events`).
 
-In the included compose file is included a Postgres 18 instance.
+### 5) Security and compliance
 
-### Pre-commit
+- [ ] Update `SECURITY.md` with real disclosure contacts and SLA.
+- [ ] Review `trivy.yaml` and `.trivyignore` for your risk policy.
+- [ ] Review `LICENSE` and attribution requirements.
 
-```sh
-uv tool install pre-commit
-pre-commit install
-```
+### 6) Local developer workflow
 
-## Tests
-
-Make sure you ran the migration and the .env is setup correctly.
-
-### Run the tests
-```sh
-cargo test
-```
+- [ ] Install hooks:
+  ```sh
+  uv tool install pre-commit
+  pre-commit install
+  ```
+- [ ] Run checks before first push:
+  ```sh
+  pre-commit run --all-files
+  cargo test
+  ```
+- [ ] Add `.env`/`.env.example` only if your app actually uses environment variables.
