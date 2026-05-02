@@ -10,7 +10,7 @@ When creating a new repository from this template, complete this checklist befor
   - [ ] `COPY --from=builder /app/target/release/<binary-name> /usr/local/bin`
   - [ ] `ENTRYPOINT ["/usr/local/bin/<binary-name>"]`
 - [ ] Update OCI labels in `Dockerfile` (`title`, `description`) to match the new project.
-- [ ] Update image names in `.github/workflows/build.yml` and `.github/workflows/release.yml` (replace `laflut3/Rust-based-project` with `<owner>/<repo>`).
+- [ ] Update image names in `.github/workflows/build.yml` and `.github/workflows/release.yml` (replace `laflut3/rust-based-project` with `<owner>/<repo>`).
 - [ ] Update the `README.md` title and description.
 - [ ] Update `SECURITY.md` with the real vulnerability disclosure process (contact details, response times).
 - [ ] Review CI tool versions in `.github/workflows/*.yml` (Rust, Python, action versions).
